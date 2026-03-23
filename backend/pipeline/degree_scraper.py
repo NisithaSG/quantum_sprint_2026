@@ -27,7 +27,7 @@ for degree in degree_urls:
     
     sections = {} #sections
     name = degree_soup.find("h1").text.strip()   #name 
-    degree_id = url.rstrip("/").split("/")[-1]  #degree ID
+    degree_id = url.rstrip("/").split("/colleges-depts/")[-1].replace("/", "-")  #degree ID
 
     print(f"Scraping {degree_id}")
 
