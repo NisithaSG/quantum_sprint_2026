@@ -1,3 +1,4 @@
+import { useMemo, useState } from 'react'
 import './index.css'
 
 const majors = [
@@ -9,6 +10,62 @@ const majors = [
 ]
 
 export default function App() {
+  const [query, setQuery] = useState('')
+  const [activeIndex, setActiveIndex] = useState(0)
+  const normalizedQuery = query.trim().toLowerCase()
+
+  const matches = useMemo(() => {
+    if (!normalizedQuery) return []
+    const filtered = majors.filter((major) =>
+      major.toLowerCase().includes(normalizedQuery)
+    )
+    return filtered.sort((a, b) => {
+      const aLower = a.toLowerCase()
+      const bLower = b.toLowerCase()
+      const aPrefix = aLower.startsWith(normalizedQuery)
+      const bPrefix = bLower.startsWith(normalizedQuery)
+      if (aPrefix !== bPrefix) return aPrefix ? -1 : 1
+      return aLower.localeCompare(bLower)
+    })
+  }, [normalizedQuery])
+
+  const highlightMatch = (text: string, term: string) => {
+    const lowerText = text.toLowerCase()
+    const lowerTerm = term.toLowerCase()
+    const index = lowerText.indexOf(lowerTerm)
+    if (index === -1 || !term) return text
+    const before = text.slice(0, index)
+    const match = text.slice(index, index + term.length)
+    const after = text.slice(index + term.length)
+    return (
+      <>
+        {before}
+        <mark>{match}</mark>
+        {after}
+      </>
+    )
+  }
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!matches.length) return
+    if (event.key === 'ArrowDown') {
+      event.preventDefault()
+      setActiveIndex((prev) => (prev + 1) % matches.length)
+    }
+    if (event.key === 'ArrowUp') {
+      event.preventDefault()
+      setActiveIndex((prev) => (prev - 1 + matches.length) % matches.length)
+    }
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      setQuery(matches[activeIndex])
+    }
+    if (event.key === 'Escape') {
+      event.preventDefault()
+      setQuery('')
+    }
+  }
+
   return (
     <main className="page">
       <section className="hero" id="top">
@@ -42,26 +99,50 @@ export default function App() {
           </div>
 
           <div className="flow-card">
-            <label htmlFor="major" className="field__label">
-              Major or program
+            <label htmlFor="major-search" className="field__label">
+              Major or Program
             </label>
             <div className="field__row">
-              <select id="major" name="major" defaultValue="">
-                <option value="" disabled>
-                  Select a major
-                </option>
-                {majors.map((major) => (
-                  <option key={major} value={major}>
-                    {major}
-                  </option>
-                ))}
-              </select>
+              <div className="search">
+                <input
+                  id="major-search"
+                  name="major-search"
+                  type="text"
+                  placeholder="Search for a major"
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  onKeyDown={handleKeyDown}
+                />
+                {normalizedQuery.length > 0 && (
+                  <div className="search__results">
+                    {matches.length === 0 ? (
+                      <span className="search__empty">
+                        No matches yet. Try another keyword.
+                      </span>
+                    ) : (
+                      matches.map((major, index) => (
+                        <button
+                          key={major}
+                          className={`search__item${
+                            index === activeIndex ? ' is-active' : ''
+                          }`}
+                          type="button"
+                          onClick={() => setQuery(major)}
+                          onMouseEnter={() => setActiveIndex(index)}
+                        >
+                          {highlightMatch(major, query)}
+                        </button>
+                      ))
+                    )}
+                  </div>
+                )}
+              </div>
               <button className="btn btn--primary" type="button">
                 Build My Map
               </button>
             </div>
             <p className="hint">
-              Need to add serch feature.
+              Start typing to see suggested majors.
             </p>
           </div>
         </div>
