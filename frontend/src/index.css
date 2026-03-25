@@ -192,6 +192,11 @@ h1 {
   grid-template-columns: minmax(0, 1fr) auto;
 }
 
+.search {
+  position: relative;
+}
+
+input,
 select {
   appearance: none;
   padding: 0.85rem 1rem;
@@ -199,6 +204,50 @@ select {
   border: 1px solid rgba(15, 23, 42, 0.2);
   font-size: 1rem;
   background: var(--white);
+  width: 100%;
+}
+
+.search__results {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 0.5rem);
+  background: var(--white);
+  border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.15);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  padding: 0.4rem;
+  display: grid;
+  gap: 0.25rem;
+  z-index: 5;
+}
+
+.search__item {
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.search__item:hover,
+.search__item.is-active {
+  background: rgba(0, 63, 110, 0.08);
+}
+
+.search__item mark {
+  background: rgba(200, 16, 46, 0.18);
+  color: inherit;
+  padding: 0 0.15rem;
+  border-radius: 4px;
+}
+
+.search__empty {
+  padding: 0.7rem 0.75rem;
+  color: var(--muted);
+  font-size: 0.9rem;
 }
 
 .hint {
