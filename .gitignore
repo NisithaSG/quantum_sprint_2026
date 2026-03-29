@@ -1,7 +1,4 @@
 # generated data files
-flamemap.db
-courses.json
-degrees.json
 
 # python
 __pycache__/

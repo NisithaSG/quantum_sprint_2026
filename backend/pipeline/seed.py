@@ -70,7 +70,7 @@ for course_id, data in courses.items():
         data["hours"],
         data["prerequisites"],
         data["description"],
-        json.dumps(data["prereq_parsed"])  # convert dict to string for storage
+        json.dumps(data.get("prereq_parsed", {}))  # convert dict to string for storage
     ))
 print(f"Done: Inserted {len(courses)} courses.")
 connection.commit()
