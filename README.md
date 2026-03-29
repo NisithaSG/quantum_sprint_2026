@@ -1,7 +1,9 @@
 # FlameMap
 
-A visual course map for UIC students - see every course in your major, connected by prerequisites, in an interactive graph.
-**Live Web App:** 
+> A visual course map for UIC students - see every course in your major, connected by prerequisites, in an interactive graph.
+
+**Live Web App:** https://forher-h9r13n8of-kamikrazehqs-projects.vercel.app  
+**Live API + Docs:** https://forher-production.up.railway.app/docs  
 
 ## What it does
 
