@@ -2,9 +2,9 @@
 
 > A visual course map for UIC students - see every course in your major, connected by prerequisites, in an interactive graph.
 
-**Live Web App:** [https://forher-h9r13n8of-kamikrazehqs-projects.vercel.app  ](https://flamemap-2026-git-main-nisitha-sree-gadhi-s-projects.vercel.app/)
+**Live Web App:** https://flamemap-2026-git-main-nisitha-sree-gadhi-s-projects.vercel.app
 
-**Live API + Docs:** [https://forher-production.up.railway.app/docs  ](https://flamemap2026-production.up.railway.app/docs)
+**Live API + Docs:** https://flamemap2026-production.up.railway.app/docs
 
 ## What it does
 
